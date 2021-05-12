@@ -1,0 +1,45 @@
+.login-page {
+    height: 100vh;
+    background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    #mainCard{
+        width: 95%;
+        min-height: 70vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        @media (min-width:600px) {
+            width: 60%;
+        }
+          @media (min-width:1000px) {
+              width: 40%;
+          }
+          .form{
+              width: 100%;
+                  @media (min-width:1000px) {
+                      width: 80%;
+                      margin: 3em;
+                  }
+                   #submitButton {
+                       width: 80%;
+                       justify-self: right;
+                       background: royalblue;
+                       color: #fff;
+                       height: 40px;
+
+                       @media (min-width:600px) {
+                           width: 60%;
+                           margin-left: 2em;
+                       }
+                   }
+
+          }
+     
+    }
+
+}

@@ -1,0 +1,72 @@
+import React from 'react'
+import {Col, Container, Row} from "react-bootstrap"
+import { Card, Statistic } from "antd"
+import "./styles/index.scss"
+import {Bar} from "react-chartjs-2"
+import {connect} from "react-redux"
+const state = {
+    labels: ['January', 'February', 'March',
+        'April', 'May'],
+    datasets: [
+        {
+            label: 'Attendance',
+            backgroundColor: 'rgba(75,192,192,.5)',
+            borderColor: 'royalblue',
+            borderWidth: 1,
+            data: [65, 59, 80, 81, 56]
+        }
+    ]
+}
+const StatisticsPage = ({ members}) => {
+    return (
+        <div className= "statistics-page" >
+            <Container>
+                <Row>
+                    <Col xs = "12" sm = "6" >
+                        <Card>
+                            <Statistic value = {members.data.length} title = "Total Number of members"  />
+
+                        </Card>
+                    </Col>
+                    <Col xs="12" sm="6" >
+                        <Card>
+                            <Statistic title="Total Number of Groups" />
+
+                        </Card>
+                    </Col>
+                    <Col className = "my-3" xs="12" sm="12" >
+                        <Card>
+                            <h4 className="text-center">
+                                Attentdence Chart
+                            </h4>
+                            <Bar
+                                data={state}
+                                options={{
+                                    title: {
+                                        display: true,
+                                        text: 'Attendence per meeting',
+                                        fontSize: 20
+                                    },
+                                    legend: {
+                                        display: true,
+                                        position: 'right'
+                                    }
+                                }}
+                            title = "Attendence trends"  color = "blue" />
+                        </Card>
+                    </Col>
+                </Row>
+                
+            </Container>
+            
+
+        </div>
+    )
+}
+const mapStateToProps = state=>{
+    return {
+        members:state.members
+    }
+}
+
+export default connect(mapStateToProps)(StatisticsPage)

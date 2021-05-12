@@ -1,0 +1,19 @@
+#miain-layout {
+    .header {
+        background: royalblue;
+        box-shadow: 3px 3px 3px rgba(20, 20, 20, .4);
+    }
+
+}
+
+.logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.main-session{
+    min-height: 85vh;
+    .main-inner{
+        padding: 2em ;
+    }
+}
