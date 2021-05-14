@@ -10,10 +10,20 @@ import { message, notification } from 'antd'
 const FETCH_USERS_REQUEST = "FETCH_USERS_REQUEST"
 const FETCH_USERS_SUCCESS = "FETCH_USERS_SUCCESS"
 const FETCH_USERS_FAILED = "FETCH_USERS_FAILED"
+const SEARCH_USER = "SEARCH_USER"
 
 
 
 //Actions
+
+export const searchUser = query=>{
+    return {
+        type:SEARCH_USER,
+        payload: query
+
+    }
+}
+
 const fetchUsersRequest = ()=>{
     return {
         type:FETCH_USERS_REQUEST}
@@ -62,6 +72,7 @@ export const getUser =()=>dispatch=>{
 
 const initialState = {
     loading:false,
+    mainData:[],
     data:[]
 
 }
@@ -78,12 +89,24 @@ export const usersReducer = (state = initialState, { type, payload }) => {
         return{
             ...state,
             loading:false,
-            data:payload
+            data:payload,
+            mainData:payload
         }
     case FETCH_USERS_FAILED:
         return {
             ...state,
             loading:false,
+        }
+    case SEARCH_USER:
+        
+        return {
+            ...state,
+            data: state.mainData.filter(item=>item.username.toLowerCase().includes(payload.toLowerCase())
+            ||item.email.toLowerCase().includes(payload.toLowerCase())
+            ||item.first_name.toLowerCase().includes(payload.toLowerCase())
+            ||item.last_name.toLowerCase().includes(payload.toLowerCase())
+            
+            )
         }
     default:
         return state

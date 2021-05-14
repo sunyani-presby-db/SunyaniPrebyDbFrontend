@@ -1,16 +1,17 @@
 import { Button, Input, Space, Statistic, Table } from 'antd'
 import React from 'react'
 import { Card, Col, Container, Row } from 'react-bootstrap'
-import { DeleteOutlined, EyeOutlined } from "@ant-design/icons"
+import { DeleteOutlined } from "@ant-design/icons"
 import './styles/index.scss'
 import { connect } from 'react-redux'
-const UsersPage = ({ userData }) => {
+import { searchUser } from '../../redux/streamlined/users'
+const UsersPage = ({ userData, filterUser }) => {
     const getColumn = () => {
         if (userData.data.length !== 0) {
             let column = []
             Object.keys(userData.data[0]).map(key => {
                 return column.push({
-                    title: key.replace('_',' '),
+                    title: key.replace('_', ' '),
                     dataIndex: key,
                     key: key
                 })
@@ -68,7 +69,7 @@ const UsersPage = ({ userData }) => {
                 <Row>
                     <Col sm="6" >
                         <Card id="card-1">
-                            <Statistic value = {userData.data.length} className="text-center" title="Number of users" />
+                            <Statistic value={userData.data.length} className="text-center" title="Number of users" />
                         </Card>
                     </Col>
                     <Col>
@@ -86,14 +87,18 @@ const UsersPage = ({ userData }) => {
                                 </h4>
                             </Col>
                             <Col>
-                                <Input.Search placeholder="Search by name or email" />
+                                <Input.Search
+                                    onChange={e => {
+                                        filterUser(e.target.value)
+                                    }}
+                                    disabled={userData.mainData.length === 0} placeholder="Search by name or email" />
                             </Col>
                         </Row>
 
                     </div>
-                    
 
-                    <Table loading = {userData.loading} style = {{overflowX:"scroll"}}  columns={columns} dataSource={userData.data} />
+
+                    <Table loading={userData.loading} style={{ overflowX: "scroll" }} columns={columns} dataSource={userData.data} />
 
 
                 </Card>
@@ -108,6 +113,11 @@ const mapStateToProps = state => {
         userData: state.users
     }
 }
+const mapDispatch = dispatch => {
+    return {
+        filterUser: query => dispatch(searchUser(query))
+    }
+}
 
 
-export default connect(mapStateToProps)(UsersPage)
+export default connect(mapStateToProps, mapDispatch)(UsersPage)
