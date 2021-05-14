@@ -10,11 +10,12 @@ import { getToken } from '../../utils/local_data/store_user_info'
 import { addMemberUrl } from '../../utils/networks/endpoints'
 import { addMember } from '../../redux/actions/members_actions';
 import { connect} from 'react-redux'
+import { CircleLoader} from 'react-spinners'
 const AddMemberModal = ({ visible, onCLose, addMmeber_ }) => {
     const [state, setState] = useState({
         isStudent: false,
         isWorker: false,
-        isLoading: true,
+        isLoading: false,
         date:""
     })
     const toggleLoadingState = () => {
@@ -73,18 +74,31 @@ const AddMemberModal = ({ visible, onCLose, addMmeber_ }) => {
         return data
     }
 
+const openLoading = ()=>{
+    setState({
+        ...state,
+        isLoading: true
+    })
+}
+    const closeLoading = () => {
+        setState({
+            ...state,
+            isLoading: false
+        })
+    }
 
 
     const postData = (values) => {
+        openLoading()
         const data = getData(values)
-        toggleLoadingState()
         const config = axios_config(getToken())
         axios.post(addMemberUrl, data, config).then(res => {
-            
+            closeLoading()
             addMmeber_(res.data.data)
             message.success("You have succesfully added a memnber")
             onCLose()
         }).catch(error => {
+            closeLoading()
             if(error.response){
                 message.error("Sorry an error")
             }
@@ -313,7 +327,25 @@ const AddMemberModal = ({ visible, onCLose, addMmeber_ }) => {
                 <Divider />
                 <Form.Item  >
                     <div style={{ display: 'flex', justifyContent: "center", alignItems: "center" }} className="submit-btn">
-                        <Button htmlType="submit" shape="round" style={{ width: "50%", height: "40px", background: "linear-gradient(to right,royalblue,teal)", color: "#fff" }} className="text-center" >Add Member</Button>
+                        <Button disabled = {state.isLoading} htmlType="submit" shape="round" style={{ width: "50%", height: "40px", background: "linear-gradient(to right,royalblue,teal)", color: "#fff" }} className="text-center" >
+                            
+                            {state.isLoading? (
+                                <>
+                                <Row className = "mx-4" >
+                                    <Col>
+                                        Adding Member
+                                    </Col>
+                                    <Col>
+                                            <div style = {{fontSize:".6rem"}} class="spinner-border spinner-border-sm" role="status">
+                                                <span class="sr-only">Loading...</span>
+                                            </div>
+                                    </Col>
+                                </Row>
+
+                                </>
+                            ) :" Add Member "}
+                            
+                           <div className = "loadi"/> </Button>
                     </div>
 
                 </Form.Item>
