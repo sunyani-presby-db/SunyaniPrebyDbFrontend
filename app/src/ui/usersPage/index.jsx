@@ -3,63 +3,63 @@ import React from 'react'
 import { Card, Col, Container, Row } from 'react-bootstrap'
 import { DeleteOutlined, EyeOutlined } from "@ant-design/icons"
 import './styles/index.scss'
-const UsersPage = () => {
-    const columns = [
-        {
-            title: "Index",
-            dataIndex: "index",
-            key: "index"
-        },
-        {
-            title: 'Name',
-            dataIndex: 'name',
-            key: 'name',
-        },
-        {
-            title: 'Email',
-            dataIndex: 'address',
-            key: 'email',
-        },
+import { connect } from 'react-redux'
+const UsersPage = ({ userData }) => {
+    const getColumn = () => {
+        if (userData.data.length !== 0) {
+            let column = []
+            Object.keys(userData.data[0]).map(key => {
+                return column.push({
+                    title: key.replace('_',' '),
+                    dataIndex: key,
+                    key: key
+                })
+            })
+            column.push(
+                {
+                    title: 'Delete',
+                    key: 'action',
+                    render: (text, record) => (
+                        <Space size="middle">
+                            <DeleteOutlined style={{ color: "red" }} onClick={() => { }} />
+                        </Space>
+                    ),
+                },
+            )
+            return column
 
+        } else {
+            return [
+                {
+                    title: "Index",
+                    dataIndex: "index",
+                    key: "index"
+                },
+                {
+                    title: 'Username',
+                    dataIndex: 'name',
+                    key: 'name',
+                },
+                {
+                    title: 'Email',
+                    dataIndex: 'address',
+                    key: 'email',
+                },
+                {
+                    title: 'Action',
+                    key: 'action',
+                    render: (text, record) => (
+                        <Space size="middle">
+                            <DeleteOutlined style={{ color: "red" }} onClick={() => { }} />
+                        </Space>
+                    ),
+                },
+            ];
+        }
+    }
 
-        {
-            title: 'Action',
-            key: 'action',
-            render: (text, record) => (
-                <Space size="middle">
-                    {/* <a>Invite {record.name}</a> */}
-                    <EyeOutlined style={{ color: "blue" }} onClick={() => { }} />
-                    <DeleteOutlined style={{ color: "red" }} onClick={() => { }} />
-                </Space>
-            ),
-        },
-    ];
+    const columns = getColumn()
 
-    const data = [
-        {
-            key: '1',
-            name: 'John Brown',
-            email: 32,
-            address: 'New York No. 1 Lake Park',
-            index: 1,
-
-        },
-        {
-            key: '2',
-            name: 'Jim Green',
-            email: 42,
-            address: 'London No. 1 Lake Park',
-            index: 2,
-
-        },
-        {
-            key: '3',
-            name: 'Joe Black',
-            email: 32,
-            address: 'Sidney No. 1 Lake Park',
-            index: 3,
-        },
-    ];
     return (
         <div className="users-page">
             <Container>
@@ -68,7 +68,7 @@ const UsersPage = () => {
                 <Row>
                     <Col sm="6" >
                         <Card id="card-1">
-                            <Statistic className="text-center" title="Number of users" />
+                            <Statistic value = {userData.data.length} className="text-center" title="Number of users" />
                         </Card>
                     </Col>
                     <Col>
@@ -80,19 +80,20 @@ const UsersPage = () => {
                 <Card id="card-3" >
                     <div className="card-header">
                         <Row>
-                            <Col sm = "4" >
+                            <Col sm="4" >
                                 <h4 className="text-center">
                                     List of Users
                                 </h4>
                             </Col>
-                        <Col>
-                            <Input.Search placeholder = "Search by name or email" />
-                        </Col>
+                            <Col>
+                                <Input.Search placeholder="Search by name or email" />
+                            </Col>
                         </Row>
 
                     </div>
+                    
 
-                    <Table columns={columns} dataSource={data} />
+                    <Table loading = {userData.loading} style = {{overflowX:"scroll"}}  columns={columns} dataSource={userData.data} />
 
 
                 </Card>
@@ -102,4 +103,11 @@ const UsersPage = () => {
     )
 }
 
-export default UsersPage
+const mapStateToProps = state => {
+    return {
+        userData: state.users
+    }
+}
+
+
+export default connect(mapStateToProps)(UsersPage)
