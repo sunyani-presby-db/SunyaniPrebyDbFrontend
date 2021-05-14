@@ -1,7 +1,6 @@
-import { MinusCircleOutlined } from '@ant-design/icons'
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Button, DatePicker, Divider, Drawer, Form, Input, notification, Select } from 'antd'
+import { Button, DatePicker, Divider, Drawer, Form, Input, Select } from 'antd'
 import React, { useState } from 'react'
 import { Col, Row } from 'react-bootstrap'
 
@@ -44,7 +43,7 @@ const EditMemberDrawer = ({ visible, memberInfo, onCLose }) => {
                             </Col>
                             <Col>
                                 <Form.Item>
-                                    <Button htmlType="submit" shape="round" style={{ width: "100%", height: "40px", background: "linear-gradient(to right,royalblue,teal)", color: "#fff" }} shape="round" >Update number</Button>
+                                    <Button htmlType="submit" shape="round" style={{ width: "100%", height: "40px", background: "linear-gradient(to right,royalblue,teal)", color: "#fff" }} >Update number</Button>
                                 </Form.Item>
                             </Col>
 

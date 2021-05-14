@@ -10,7 +10,6 @@ import { getToken } from '../../utils/local_data/store_user_info'
 import { addMemberUrl } from '../../utils/networks/endpoints'
 import { addMember } from '../../redux/actions/members_actions';
 import { connect} from 'react-redux'
-import { CircleLoader} from 'react-spinners'
 const AddMemberModal = ({ visible, onCLose, addMmeber_ }) => {
     const [state, setState] = useState({
         isStudent: false,
@@ -18,12 +17,12 @@ const AddMemberModal = ({ visible, onCLose, addMmeber_ }) => {
         isLoading: false,
         date:""
     })
-    const toggleLoadingState = () => {
-        setState({
-            ...state,
-            isLoading: !state.isLoading
-        })
-    }
+    // const toggleLoadingState = () => {
+    //     setState({
+    //         ...state,
+    //         isLoading: !state.isLoading
+    //     })
+    // }
     const toggleStudentForm = () => {
         setState({
             ...state,
@@ -65,7 +64,7 @@ const AddMemberModal = ({ visible, onCLose, addMmeber_ }) => {
         }
         if(values.phone_numbers.length>0){
             values.phone_numbers.map(number=>{
-                data.phone_numbers.push({
+               return data.phone_numbers.push({
                     number
                 })
             })

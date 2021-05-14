@@ -14,6 +14,7 @@ import MembersPage from '../members_page';
 import { getMembers } from '../../redux/actions/members_actions';
 import LoadingOverlay from 'react-loading-overlay';
 import { BeatLoader } from 'react-spinners'
+import UsersPage from '../usersPage';
 const HomePage = ({ fetchMembers, componentsData}) => {
     useEffect(() => {
           fetchMembers()
@@ -71,10 +72,13 @@ const HomePage = ({ fetchMembers, componentsData}) => {
                         </span>
                     </Menu.Item>
                     <Menu.Item className="my-3" key="5" >
-                        <FontAwesomeIcon className="mr-2" icon={faUser} style={iconStyle} />
-                        <span style={labelStyle} >
-                            Users
+                        <Link to = "/users">
+                                <FontAwesomeIcon className="mr-2" icon={faUser} style={iconStyle} />
+                                <span style={labelStyle} >
+                                    Users
                         </span>
+                        </Link>
+                       
                     </Menu.Item>
                 </Menu>
             </Drawer>
@@ -103,6 +107,7 @@ const HomePage = ({ fetchMembers, componentsData}) => {
 
                         <Switch>
                             <Route path="/members" component={MembersPage} />
+                                <Route path="/users" component={UsersPage}/>
                             <Route path="" component={StatisticsPage} />
                         </Switch>
                     </div>
