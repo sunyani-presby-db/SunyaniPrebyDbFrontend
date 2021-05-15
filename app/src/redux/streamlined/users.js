@@ -11,10 +11,17 @@ const FETCH_USERS_REQUEST = "FETCH_USERS_REQUEST"
 const FETCH_USERS_SUCCESS = "FETCH_USERS_SUCCESS"
 const FETCH_USERS_FAILED = "FETCH_USERS_FAILED"
 const SEARCH_USER = "SEARCH_USER"
+const DELETE_USER = "DELETE_USER"
 
 
 
 //Actions
+export const deleteUser = user=>{
+    return {
+        type:DELETE_USER,
+        payload:user
+    }
+}
 
 export const searchUser = query=>{
     return {
@@ -107,6 +114,12 @@ export const usersReducer = (state = initialState, { type, payload }) => {
             ||item.last_name.toLowerCase().includes(payload.toLowerCase())
             
             )
+        }
+    case DELETE_USER:
+        return {
+            ...state,
+            data:state.data.filter(item=>item.id !== payload.id),
+            mainData:state.mainData.filter(item=>item.id !== payload.id)
         }
     default:
         return state

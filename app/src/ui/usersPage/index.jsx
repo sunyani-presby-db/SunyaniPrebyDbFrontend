@@ -1,16 +1,29 @@
 import { Button, Input, Space, Statistic, Table } from 'antd'
-import React from 'react'
+import React, { useState } from 'react'
 import { Card, Col, Container, Row } from 'react-bootstrap'
 import { DeleteOutlined } from "@ant-design/icons"
 import './styles/index.scss'
 import { connect } from 'react-redux'
 import { searchUser } from '../../redux/streamlined/users'
+import DeleteUsersModal from './deleteUsersModal'
 const UsersPage = ({ userData, filterUser }) => {
+    const [state,setState] = useState({
+        currentInfo : {},
+        deleteDrawerVisible:false
+    })
+
+    const closeDeleteDrawer =()=>{
+        setState({
+            ...state,
+            deleteDrawerVisible:false
+        })
+    }
+
     const getColumn = () => {
         if (userData.data.length !== 0) {
             let column = []
             Object.keys(userData.data[0]).map(key => {
-                return column.push({
+                return (key.toLowerCase() === "is_superuser")?"": column.push({
                     title: key.replace('_', ' '),
                     dataIndex: key,
                     key: key
@@ -22,7 +35,13 @@ const UsersPage = ({ userData, filterUser }) => {
                     key: 'action',
                     render: (text, record) => (
                         <Space size="middle">
-                            <DeleteOutlined style={{ color: "red" }} onClick={() => { }} />
+                            <DeleteOutlined style={{ color: "red" }} onClick={() => {
+                                setState({
+                                    ...state,
+                                    currentInfo:record,
+                                    deleteDrawerVisible:true
+                                })
+                             }} />
                         </Space>
                     ),
                 },
@@ -63,6 +82,7 @@ const UsersPage = ({ userData, filterUser }) => {
 
     return (
         <div className="users-page">
+            <DeleteUsersModal info = {state.currentInfo} visible = {state.deleteDrawerVisible} onclose = {closeDeleteDrawer}  />
             <Container>
                 <h1>Users</h1>
 
