@@ -10,6 +10,16 @@ import { getToken } from '../../utils/local_data/store_user_info'
 import { addMemberUrl } from '../../utils/networks/endpoints'
 import { addMember } from '../../redux/actions/members_actions';
 import { connect} from 'react-redux'
+const formItemLayout = {
+    labelCol: {
+        xs: { span: 24 },
+        sm: { span: 8 },
+    },
+    wrapperCol: {
+        xs: { span: 24 },
+        sm: { span: 16 },
+    },
+};
 const AddMemberModal = ({ visible, onCLose, addMmeber_ }) => {
     const [state, setState] = useState({
         isStudent: false,
@@ -119,6 +129,7 @@ const openLoading = ()=>{
             <h5 className="text-center">Personal Information</h5>
             <Divider />
             <Form
+                {...formItemLayout}
             onFinish = {postData} 
             >
                 <Form.Item
@@ -146,8 +157,6 @@ const openLoading = ()=>{
                     <Input type="email" placeholder="eg. xxxxx@xxx.xxx" />
                 </Form.Item>
 
-                <Row>
-                    <Col sm="6" >
                         <Form.Item
                             name="date_of_birth"
                             rules={[
@@ -162,8 +171,6 @@ const openLoading = ()=>{
                                 })
                             }}  />
                         </Form.Item>
-                    </Col>
-                    <Col sm="6" >
                         <Form.Item
                             name="sex"
                             rules={[
@@ -176,8 +183,6 @@ const openLoading = ()=>{
 
                             </Select>
                         </Form.Item>
-                    </Col>
-                </Row>
                 <Form.Item
                     name="adress"
                     rules={[
@@ -324,9 +329,8 @@ const openLoading = ()=>{
                     </div>) : ""
                 }
                 <Divider />
-                <Form.Item  >
-                    <div style={{ display: 'flex', justifyContent: "center", alignItems: "center" }} className="submit-btn">
-                        <Button disabled = {state.isLoading} htmlType="submit" shape="round" style={{ width: "50%", height: "40px", background: "linear-gradient(to right,royalblue,teal)", color: "#fff" }} className="text-center" >
+                    <div style={{ display: 'flex', justifyContent: "center", alignItems: "center" }} className="submit-btn ml-5">
+                        <Button disabled = {state.isLoading} htmlType="submit" shape="round" style={{ width: "50%", background: "linear-gradient(to right,royalblue,teal)", color: "#fff",marginLeft:"1em" }} className="text-center  ml-5" >
                             
                             {state.isLoading? (
                                 <>
@@ -347,7 +351,6 @@ const openLoading = ()=>{
                            <div className = "loadi"/> </Button>
                     </div>
 
-                </Form.Item>
 
             </Form>
         </Drawer >

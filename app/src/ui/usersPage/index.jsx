@@ -6,6 +6,7 @@ import './styles/index.scss'
 import { connect } from 'react-redux'
 import { searchUser } from '../../redux/streamlined/users'
 import DeleteUsersModal from './deleteUsersModal'
+import AddUserModal from './addUserModal'
 const UsersPage = ({ userData, filterUser }) => {
     const [state,setState] = useState({
         currentInfo : {},
@@ -82,6 +83,7 @@ const UsersPage = ({ userData, filterUser }) => {
 
     return (
         <div className="users-page">
+            <AddUserModal visible />
             <DeleteUsersModal info = {state.currentInfo} visible = {state.deleteDrawerVisible} onclose = {closeDeleteDrawer}  />
             <Container>
                 <h1>Users</h1>
