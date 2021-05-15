@@ -13,6 +13,9 @@ const FETCH_USERS_FAILED = "FETCH_USERS_FAILED"
 const SEARCH_USER = "SEARCH_USER"
 const DELETE_USER = "DELETE_USER"
 
+const ADD_USERS_SUCCESS = "ADD_USERS_SUCCESS"
+
+
 
 
 //Actions
@@ -48,6 +51,17 @@ const fetchUsersFailure =()=>{
         type:FETCH_USERS_FAILED
     }
 }
+
+
+export const addUsersSuccess = users=>{
+    return {
+        type:ADD_USERS_SUCCESS,
+        payload:users
+    }
+}
+
+
+
 
 
 
@@ -120,6 +134,14 @@ export const usersReducer = (state = initialState, { type, payload }) => {
             ...state,
             data:state.data.filter(item=>item.id !== payload.id),
             mainData:state.mainData.filter(item=>item.id !== payload.id)
+
+    
+        }
+    case ADD_USERS_SUCCESS:
+        return {
+            ...state,
+            data: [...state.data,payload],
+            mainData: [...state.mainData,payload]
         }
     default:
         return state
