@@ -10,7 +10,8 @@ import AddUserModal from './addUserModal'
 const UsersPage = ({ userData, filterUser }) => {
     const [state,setState] = useState({
         currentInfo : {},
-        deleteDrawerVisible:false
+        deleteDrawerVisible:false,
+        addUserModalVisible:false,
     })
 
     const closeDeleteDrawer =()=>{
@@ -80,10 +81,22 @@ const UsersPage = ({ userData, filterUser }) => {
     }
 
     const columns = getColumn()
+    const openAddUserModal  = ()=>{
+        setState({
+            ...state,
+            addUserModalVisible:true
+        })
+    }
+    const closeAddUserModal = () => {
+        setState({
+            ...state,
+            addUserModalVisible: false
+        })
+    }
 
     return (
         <div className="users-page">
-            <AddUserModal visible />
+            <AddUserModal onClose = {closeAddUserModal} visible={state.addUserModalVisible}/>
             <DeleteUsersModal info = {state.currentInfo} visible = {state.deleteDrawerVisible} onclose = {closeDeleteDrawer}  />
             <Container>
                 <h1>Users</h1>
@@ -96,7 +109,7 @@ const UsersPage = ({ userData, filterUser }) => {
                     </Col>
                     <Col>
                         <Card id="card-2" style={{ width: "100%" }} >
-                            <Button shape="round" style={{ width: "60%", color: "royalblue", borderColor: "royalblue" }} >Add User</Button>
+                            <Button onClick = {openAddUserModal} shape="round" style={{ width: "60%", color: "royalblue", borderColor: "royalblue" }} >Add User</Button>
                         </Card>
                     </Col>
                 </Row>

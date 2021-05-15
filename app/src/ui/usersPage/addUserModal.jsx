@@ -15,7 +15,7 @@ const formItemLayout = {
 
 const AddUserModal = ({ visible, onClose }) => {
     return (
-        <Modal closable={false} visible={visible} onCancel={onclose} footer={null} >
+        <Modal closable={false} visible={visible} onCancel={onClose} footer={null} >
             <h4 className="text-center">Add User</h4>
             <p><span style={{ color: "red" }} >Note: </span> only user with super-user previlliges can perform this actoion </p>
             <Divider />
