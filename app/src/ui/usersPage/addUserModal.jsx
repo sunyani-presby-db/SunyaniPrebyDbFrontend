@@ -47,11 +47,12 @@ const AddUserModal = ({ visible, onClose, addUser }) => {
         const config = axios_config(getToken())
         openLoading()
         axios.post(addUserUrl, values, config).then(res => {
+            console.log(res.data.data);
+            addUser(res.data.data)
 
-            addUser(res.data)
             closeLoading()
-            onclose()
             message.success("You have successfully added a user")
+            onClose()
         }).catch(error => {
             closeLoading()
             if (error.response) {
@@ -166,7 +167,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
     return {
-        addUser: user => dispatch(addUsersSuccess())
+        addUser: user => dispatch(addUsersSuccess(user))
     }
 }
 

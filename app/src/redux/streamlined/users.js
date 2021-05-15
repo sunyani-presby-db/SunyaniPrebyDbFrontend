@@ -137,7 +137,9 @@ export const usersReducer = (state = initialState, { type, payload }) => {
 
     
         }
+  
     case ADD_USERS_SUCCESS:
+        console.log(payload);
         return {
             ...state,
             data: [...state.data,payload],
