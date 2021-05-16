@@ -18,11 +18,15 @@ import UsersPage from '../usersPage';
 import { getUser } from '../../redux/streamlined/users';
 import AttendancePage from '../attendance';
 import { fetchMeetingDays } from '../../redux/streamlined/attendance';
-const HomePage = ({ fetchMembers, fetchUsers, componentsData, getMeetingDays }) => {
+import GroupPage from '../group_page';
+import { getAllGroupData } from '../../redux/streamlined/group';
+
+const HomePage = ({ fetchMembers, fetchUsers, componentsData, getMeetingDays, fetchGroups }) => {
     useEffect(() => {
         fetchMembers()
         fetchUsers()
         getMeetingDays()
+        fetchGroups()
     }, [fetchMembers, fetchUsers, getMeetingDays])
     const [state, setState] = useState({
         drawerVisible: false
@@ -74,10 +78,12 @@ const HomePage = ({ fetchMembers, fetchUsers, componentsData, getMeetingDays }) 
 
                         </Menu.Item>
                         <Menu.Item className="my-3" key="4" >
-                            <FontAwesomeIcon className="mr-2" icon={faUsers} style={iconStyle} />
-                            <span style={labelStyle} >
-                                Groups
-                            </span>
+                            <Link to="/groups">
+                                <FontAwesomeIcon className="mr-2" icon={faUsers} style={iconStyle} />
+                                <span style={labelStyle} >
+                                    Groups
+                                </span>
+                            </Link>
                         </Menu.Item>
                         <Menu.Item className="my-3" key="5" >
                             <Link to="/users">
@@ -114,7 +120,7 @@ const HomePage = ({ fetchMembers, fetchUsers, componentsData, getMeetingDays }) 
 
 
                             <Switch>
-
+                                <Route path='/groups' component={GroupPage} />
                                 <Route path="/members" component={MembersPage} />
                                 <Route path="/users" component={UsersPage} />
                                 <Route path="/attendance" component={AttendancePage} />
@@ -142,7 +148,8 @@ const mapDispatchToProps = dispatch => {
     return {
         fetchMembers: () => dispatch(getMembers()),
         fetchUsers: () => dispatch(getUser()),
-        getMeetingDays: () => dispatch(fetchMeetingDays())
+        getMeetingDays: () => dispatch(fetchMeetingDays()),
+        fetchGroups: () => dispatch(getAllGroupData())
 
     }
 }

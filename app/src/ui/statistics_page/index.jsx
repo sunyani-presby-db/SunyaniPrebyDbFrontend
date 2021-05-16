@@ -5,7 +5,7 @@ import "./styles/index.scss"
 import {Bar} from "react-chartjs-2"
 import {connect} from "react-redux"
 
-const StatisticsPage = ({ members, attendanceInfo}) => {
+const StatisticsPage = ({ members, attendanceInfo, groups}) => {
     const chartState = ()=>{
         let labels = []
         let datasets= [
@@ -56,7 +56,9 @@ const StatisticsPage = ({ members, attendanceInfo}) => {
                     </Col>
                     <Col xs="12" sm="6" >
                         <Card>
-                            <Statistic  className="text-center" title="Total Number of Groups" />
+                            <Statistic  className="text-center" title="Total Number of Groups"
+                            value = {groups.data.length || 0}
+                            />
 
                         </Card>
                     </Col>
@@ -92,7 +94,8 @@ const StatisticsPage = ({ members, attendanceInfo}) => {
 const mapStateToProps = state=>{
     return {
         members:state.members,
-        attendanceInfo: state.meetingDays
+        attendanceInfo: state.meetingDays,
+        groups: state.groups,
     }
 }
 

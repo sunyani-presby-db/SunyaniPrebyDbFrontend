@@ -1,0 +1,27 @@
+
+
+.custom-panel-card{
+  height: 150px;
+  width: 100%;
+  display: grid;
+  place-content: center;
+
+  .ant-btn{
+    width: 300px;
+
+    &:hover {
+      background: royalblue;
+      color: #f4f4f4 !important;
+      border: none !important;
+    }
+  }
+}
+
+
+
+.ant-drawer{
+  width: 400px !important;
+  .ant-drawer-content-wrapper{
+    width: 100% !important;
+  }
+}
