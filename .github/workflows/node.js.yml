@@ -32,6 +32,6 @@ jobs:
           cd /home/ubuntu/app 
           npm i
           npm run build
-          sudo cp -r ./build/* /var/wwww/html
+          sudo cp -r ./build/* /var/www/html
           sudo systemctl restart nginx
 
