@@ -42,6 +42,7 @@ const StatisticsPage = ({ members, attendanceInfo}) => {
         }
        
 
+        
     }
     return (
         <div className= "statistics-page" >
