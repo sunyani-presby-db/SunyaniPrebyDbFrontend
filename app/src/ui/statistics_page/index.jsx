@@ -4,33 +4,58 @@ import { Card, Statistic } from "antd"
 import "./styles/index.scss"
 import {Bar} from "react-chartjs-2"
 import {connect} from "react-redux"
-const state = {
-    labels: ['January', 'February', 'March',
-        'April', 'May'],
-    datasets: [
-        {
-            label: 'Attendance',
-            backgroundColor: 'rgba(75,192,192,.5)',
-            borderColor: 'royalblue',
-            borderWidth: 1,
-            data: [65, 59, 80, 81, 56]
+
+const StatisticsPage = ({ members, attendanceInfo}) => {
+    const chartState = ()=>{
+        let labels = []
+        let datasets= [
+            {
+                label: 'Attendance',
+                backgroundColor: 'rgba(75,192,192,.5)',
+                borderColor: 'royalblue',
+                borderWidth: 1,
+                data: []
+            }
+        ]
+        if (attendanceInfo.mainData.length !==0){
+            attendanceInfo.mainData.map(item=>{
+                labels.push(Date(item.date).slice(0, 16))
+                datasets[0].data.push(item.attendance.length)
+            })
+            return {
+                labels,
+                datasets
+            }
+        }else{
+            return {
+                labels: [],
+                datasets: [
+                    {
+                        label: 'Attendance',
+                        backgroundColor: 'rgba(75,192,192,.5)',
+                        borderColor: 'royalblue',
+                        borderWidth: 1,
+                        data: []
+                    }
+                ]
+            }
         }
-    ]
-}
-const StatisticsPage = ({ members}) => {
+       
+
+    }
     return (
         <div className= "statistics-page" >
             <Container>
                 <Row>
                     <Col xs = "12" sm = "6" >
                         <Card>
-                            <Statistic value = {members.data.length} title = "Total Number of members"  />
+                            <Statistic className = "text-center" loading={members.loading} value = {members.data.length} title = "Total Number of members"  />
 
                         </Card>
                     </Col>
                     <Col xs="12" sm="6" >
                         <Card>
-                            <Statistic title="Total Number of Groups" />
+                            <Statistic  className="text-center" title="Total Number of Groups" />
 
                         </Card>
                     </Col>
@@ -40,7 +65,7 @@ const StatisticsPage = ({ members}) => {
                                 Attentdence Chart
                             </h4>
                             <Bar
-                                data={state}
+                                data={chartState()}
                                 options={{
                                     title: {
                                         display: true,
@@ -65,7 +90,8 @@ const StatisticsPage = ({ members}) => {
 }
 const mapStateToProps = state=>{
     return {
-        members:state.members
+        members:state.members,
+        attendanceInfo: state.meetingDays
     }
 }
 
