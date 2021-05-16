@@ -16,12 +16,14 @@ import LoadingOverlay from 'react-loading-overlay';
 import { BeatLoader } from 'react-spinners'
 import UsersPage from '../usersPage';
 import { getUser } from '../../redux/streamlined/users';
+import { getAllGroupData } from '../../redux/streamlined/group';
 import GroupPage from '../group_page';
-const HomePage = ({ fetchMembers, fetchUsers,componentsData}) => {
+const HomePage = ({ fetchMembers, fetchUsers,fetchGroups, componentsData}) => {
     useEffect(() => {
           fetchMembers()
               fetchUsers()
-    }, [fetchMembers, fetchUsers])
+              fetchGroups()
+    }, [fetchMembers, fetchUsers, fetchGroups])
     const [state, setState] = useState({
         drawerVisible: false
     })
@@ -136,8 +138,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         fetchMembers: () => dispatch(getMembers()),
-        fetchUsers:()=>dispatch(getUser())
-
+        fetchUsers:()=>dispatch(getUser()),
+        fetchGroups: () =>  dispatch(getAllGroupData())
     }
 }
 

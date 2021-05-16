@@ -17,7 +17,7 @@ const state = {
         }
     ]
 }
-const StatisticsPage = ({ members}) => {
+const StatisticsPage = ({ members, groups}) => {
     return (
         <div className= "statistics-page" >
             <Container>
@@ -30,7 +30,7 @@ const StatisticsPage = ({ members}) => {
                     </Col>
                     <Col xs="12" sm="6" >
                         <Card>
-                            <Statistic title="Total Number of Groups" />
+                            <Statistic title="Total Number of Groups" value={groups.data.length || 0}/>
 
                         </Card>
                     </Col>
@@ -65,7 +65,8 @@ const StatisticsPage = ({ members}) => {
 }
 const mapStateToProps = state=>{
     return {
-        members:state.members
+        members:state.members,
+        groups: state.groups
     }
 }
 

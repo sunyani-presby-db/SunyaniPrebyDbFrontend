@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
-import { Row, Col, Card, Statistic, Button } from 'antd'
+import { Row, Col, Card, Statistic, Button, Input, Form } from 'antd'
 import './styles/style.scss'
 import CustomDrawer from './custom_drawer'
 import CustomForm from './custom_form'
+import CustomTable from './custom_table'
+import { connect } from 'react-redux'
 
-const GroupPage = ()  => {
+const GroupPage = ({groupData})  => {
   const [hideDrawer, setHideDrawer] = useState(false)
 
   const drawerHandler = (e, close=true) => {
@@ -13,6 +15,8 @@ const GroupPage = ()  => {
     else
     setHideDrawer(e.target.value)
   }
+
+  
   return (
     <div className='group-section'>
       <div className='container'>
@@ -20,7 +24,7 @@ const GroupPage = ()  => {
         <Row gutter={[16,16]}>
           <Col sm={{span: 12}}>
             <Card className='custom-panel-card'>
-              <Statistic value={10} className="text-center" title="Number of users" />
+              <Statistic value={groupData.data.length || 0} className="text-center" title="Number of users" />
             </Card>
           </Col>
           <Col sm={{span: 12}}>
@@ -33,7 +37,18 @@ const GroupPage = ()  => {
           <Row>
           <Col span={24}>
             <Card>
-              <p>Enim qui quis laboris commodo magna sit aute minim.</p>
+              <Row>
+                <Col span={12}><h3>List of groups</h3></Col>
+                <Col span={12}>
+                  <Form>
+                    <Form.Item label='search:'>
+                      <Input.Search label='search' placeholder=''/>
+                    </Form.Item>
+                  </Form>
+               
+                </Col>
+              </Row>
+              <CustomTable source={groupData.data}/>
             </Card>
           </Col>
         </Row>
@@ -49,4 +64,16 @@ const GroupPage = ()  => {
   )
 }
 
-export default GroupPage
+const mapStateToProps= state => {
+  return {
+    groupData: state.groups
+  }
+}
+
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     fetchGroups: data => dispatch(fetchGroupData(data))
+//   }
+// }
+
+export default connect(mapStateToProps)(GroupPage)
