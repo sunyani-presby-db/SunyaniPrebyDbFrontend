@@ -2,64 +2,109 @@ import { DeleteOutlined, EditOutlined, EyeOutlined } from '@ant-design/icons'
 import { Card, Statistic, Button, Input, Table, Space } from 'antd'
 import React from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
-
-const columns = [
-    {
-        title: 'Title',
-        dataIndex: 'name',
-        key: 'name',
-    },
-    {
-        title:"Date",
-        dataIndex:"date",
-        key: "date",
-        render: (text)=><p> {Date(text).slice(0,16)} </p>
-    },
-    {
-        title: 'Attendance',
-        dataIndex: 'age',
-        key: 'age',
-    },
-
-    {
-        title: 'Actions',
-        render: (text, record) => (
-            <Space size="middle">
-                <EyeOutlined style = {{color :"yellow"}} onClick = {()=>{}} />
-                <EditOutlined style={{ color: "royalblue" }}  onClick = {()=>{}} />
-                <DeleteOutlined style={{ color: "red" }}  onClick = {()=>{}} />
+import { connect } from 'react-redux';
 
 
-            </Space>
-        )
+
+
+
+const AttendancePage = ({ meetingDaysInfo }) => {
+    const getColumns = () => {
+        if (meetingDaysInfo.data.length !== 0) {
+            const columns = [{
+                title: "Title",
+                dataIndex: "title",
+                key: "title"
+
+            }]
+            Object.keys(meetingDaysInfo.data[0])
+                .map(key => {
+                    if (key === "created_at" || key === "updated_at" || key === "id" || key === "title" || key === "desciption") {
+                        return ""
+                    }
+                    if (key === "date") {
+                        return columns.push(
+                            {
+                                title: "Date",
+                                dataIndex: "date",
+                                key: "date",
+                                render: (text) => <p> {Date(text).slice(0, 16)} </p>
+                            },
+                        )
+
+                    }
+                    if (key === "attendance") {
+                        return columns.push(
+                            {
+                                title: "Attendance",
+                                dataIndex: "attendance",
+                                key: "attendance",
+                                render: (text) => <p> {text.length} </p>
+                            },
+                        )
+                    }
+
+                    return columns.push({
+                        title: key,
+                        dataIndex: key,
+                        key: key
+                    })
+                })
+            columns.push({
+                title: 'Actions',
+                render: (text, record) => (
+                    <Space size="middle">
+                        <EyeOutlined style={{ color: "yellow" }} onClick={() => { }} />
+                        <EditOutlined style={{ color: "royalblue" }} onClick={() => { }} />
+                        <DeleteOutlined style={{ color: "red" }} onClick={() => { }} />
+
+
+                    </Space>
+                )
+            })
+            return columns
+        } else {
+            return [
+                {
+                    title: 'Title',
+                    dataIndex: 'name',
+                    key: 'name',
+                },
+                {
+                    title: "Date",
+                    dataIndex: "date",
+                    key: "date",
+                    render: (text) => <p> {Date(text).slice(0, 16)} </p>
+                },
+                {
+                    title: 'Attendance',
+                    dataIndex: 'age',
+                    key: 'age',
+                },
+
+                {
+                    title: 'Actions',
+                    render: (text, record) => (
+                        <Space size="middle">
+                            <EyeOutlined style={{ color: "yellow" }} onClick={() => { }} />
+                            <EditOutlined style={{ color: "royalblue" }} onClick={() => { }} />
+                            <DeleteOutlined style={{ color: "red" }} onClick={() => { }} />
+
+
+                        </Space>
+                    )
+                }
+            ];
+        }
     }
-];
-
-
-const dataSource = [
-    {
-        key: '1',
-        name: 'Mike WIth SOme well',
-        age: 32,
-        date:'2020-12-13'
-    },
-    {
-        key: '2',
-        name: 'John',
-        age: 42,
-        date: '2020-12-13'
-    },
-];
-
-
-const AttendancePage = () => {
+    const columns = getColumns()
     return (
         <div  >
             <Container>
                 <Row>
                     <Col sm="6" >
                         <Card style={{ height: "150px" }} >
-                            <Statistic className="text-center" title="Number of days" />
+                            <Statistic value={meetingDaysInfo.mainData.length} className="text-center" title="Number of days" />
                         </Card>
                     </Col>
                     <Col>
@@ -78,7 +123,7 @@ const AttendancePage = () => {
                         </Col>
 
                     </Row>
-                    <Table className="mt-4" columns={columns} dataSource={dataSource} />
+                    <Table style={{ overflowX: "scroll" }} loading={meetingDaysInfo.loading} className="mt-4" columns={columns} dataSource={meetingDaysInfo.data} />
                 </Card>
 
             </Container>
@@ -87,4 +132,9 @@ const AttendancePage = () => {
     )
 }
 
-export default AttendancePage
+const mapStateToProps = state => {
+    return {
+        meetingDaysInfo: state.meetingDays
+    }
+}
+export default connect(mapStateToProps)(AttendancePage)

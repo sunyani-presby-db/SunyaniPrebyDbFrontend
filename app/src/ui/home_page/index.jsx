@@ -17,11 +17,13 @@ import { BeatLoader } from 'react-spinners'
 import UsersPage from '../usersPage';
 import { getUser } from '../../redux/streamlined/users';
 import AttendancePage from '../attendance';
-const HomePage = ({ fetchMembers, fetchUsers, componentsData }) => {
+import { fetchMeetingDays } from '../../redux/streamlined/attendance';
+const HomePage = ({ fetchMembers, fetchUsers, componentsData, getMeetingDays }) => {
     useEffect(() => {
         fetchMembers()
         fetchUsers()
-    }, [fetchMembers, fetchUsers])
+        getMeetingDays()
+    }, [fetchMembers, fetchUsers, getMeetingDays])
     const [state, setState] = useState({
         drawerVisible: false
     })
@@ -63,13 +65,13 @@ const HomePage = ({ fetchMembers, fetchUsers, componentsData }) => {
                             </Link>
                         </Menu.Item>
                         <Menu.Item className="my-3" key="3" >
-                            <Link to = "/attendance">
+                            <Link to="/attendance">
                                 <FontAwesomeIcon className="mr-2" icon={faCalendar} style={iconStyle} />
                                 <span style={labelStyle} >
                                     Attendance
                                 </span>
                             </Link>
-                         
+
                         </Menu.Item>
                         <Menu.Item className="my-3" key="4" >
                             <FontAwesomeIcon className="mr-2" icon={faUsers} style={iconStyle} />
@@ -115,7 +117,7 @@ const HomePage = ({ fetchMembers, fetchUsers, componentsData }) => {
 
                                 <Route path="/members" component={MembersPage} />
                                 <Route path="/users" component={UsersPage} />
-                                <Route path="/attendance" component={AttendancePage}  />
+                                <Route path="/attendance" component={AttendancePage} />
                                 <Route path="" component={StatisticsPage} />
 
                             </Switch>
@@ -139,7 +141,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         fetchMembers: () => dispatch(getMembers()),
-        fetchUsers: () => dispatch(getUser())
+        fetchUsers: () => dispatch(getUser()),
+        getMeetingDays: () => dispatch(fetchMeetingDays())
 
     }
 }
