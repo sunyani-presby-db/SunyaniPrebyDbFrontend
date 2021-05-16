@@ -27,7 +27,7 @@ const HomePage = ({ fetchMembers, fetchUsers, componentsData, getMeetingDays, fe
         fetchUsers()
         getMeetingDays()
         fetchGroups()
-    }, [fetchMembers, fetchUsers, getMeetingDays])
+    }, [fetchMembers, fetchUsers, getMeetingDays, fetchGroups])
     const [state, setState] = useState({
         drawerVisible: false
     })
@@ -46,7 +46,7 @@ const HomePage = ({ fetchMembers, fetchUsers, componentsData, getMeetingDays, fe
     return (
         <LoadingOverlay active={componentsData.overlayLoadingVisible} spinner={<BeatLoader color="#ffffff" />} >
             <Layout id="miain-layout" >
-                <Drawer onClose={toggelDrawer} visible={state.drawerVisible} placement="left" >
+                <Drawer  onClose={toggelDrawer} visible={state.drawerVisible} placement="left" >
                     <div className="logo">
                         <img width="50%" src={logo} alt="" srcset="" />
                     </div>

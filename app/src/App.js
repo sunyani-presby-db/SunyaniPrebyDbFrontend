@@ -3,6 +3,7 @@ import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import HomePage from './ui/home_page';
 import LoginPage from './ui/login';
 import ProtectedRoute from './ui/protected_route';
+import 'antd/dist/antd.css';
 
 function App() {
   return (
