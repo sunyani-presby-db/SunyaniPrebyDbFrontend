@@ -1,21 +1,21 @@
 import React, { useState } from 'react'
 import { Row, Col, Card, Statistic, Button, Input, Form } from 'antd'
 import './styles/style.scss'
-import CustomDrawer from './custom_drawer'
+import CustomModal from './custom_modal'
 import CustomForm from './custom_form'
 import CustomTable from './custom_table'
 import { connect } from 'react-redux'
 
 const GroupPage = ({groupData})  => {
-  const [hideDrawer, setHideDrawer] = useState(false)
+  const [hideModal, setHideModal] = useState(false)
 
-  const drawerHandler = (e, close=true) => {
-    if (close)
-    setHideDrawer(true)
-    else
-    setHideDrawer(e.target.value)
+  const hideModalHandler = (flag=true) => {
+    setHideModal(flag)
   }
 
+  const addGroup = () => {
+    console.log('added a group')
+  }
   
   return (
     <div className='group-section'>
@@ -29,7 +29,7 @@ const GroupPage = ({groupData})  => {
           </Col>
           <Col sm={{span: 12}}>
             <Card className='custom-panel-card'>
-            <Button onClick={drawerHandler} shape="round" style={{ color: "royalblue", borderColor: "royalblue" }} >Add Group</Button>
+            <Button onClick={() => hideModalHandler()} shape="round" style={{ color: "royalblue", borderColor: "royalblue" }} >Add Group</Button>
             </Card>
           </Col>
         </Row>
@@ -54,12 +54,12 @@ const GroupPage = ({groupData})  => {
         </Row>
         </div>
       </div>
-      <CustomDrawer 
+      <CustomModal 
       label={'Add Group'} 
-      hide={hideDrawer} 
-      drawerHandler={drawerHandler}>
-        <CustomForm />
-      </CustomDrawer>
+      hide={hideModal} 
+      hideModalHandler={hideModalHandler}>
+        <CustomForm onSubmit={addGroup}/>
+      </CustomModal>
     </div>
   )
 }
