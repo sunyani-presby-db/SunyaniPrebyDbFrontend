@@ -9,6 +9,7 @@ import {getToken} from '../../utils/local_data/store_user_info'
 
 //Action creators
 const FETCH_GROUP_REQUEST = 'FETCH_GROUP_REQUEST';
+const ADDED_NEW_GROUP = 'ADDED_NEW_GROUP';
 
 
 
@@ -26,6 +27,7 @@ export const getAllGroupData =()=>dispatch=>{
   })
 }
 
+
 export const fetchGroupData = (data) => {
   return {
     type: FETCH_GROUP_REQUEST,
@@ -34,6 +36,13 @@ export const fetchGroupData = (data) => {
     }
   }
 } 
+
+export const addGroup = () => {
+  return {
+    type: ADDED_NEW_GROUP,
+    
+  }
+}
 
 
 const initialState = {
