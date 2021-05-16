@@ -21,6 +21,7 @@ const StatisticsPage = ({ members, attendanceInfo}) => {
             attendanceInfo.mainData.map(item=>{
                 labels.push(Date(item.date).slice(0, 16))
                 datasets[0].data.push(item.attendance.length)
+                return item
             })
             return {
                 labels,
