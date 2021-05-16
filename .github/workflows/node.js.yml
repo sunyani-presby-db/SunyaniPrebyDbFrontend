@@ -1,4 +1,4 @@
-name: Django CI
+name: REACT CI
 
 on:
   push:
@@ -32,6 +32,6 @@ jobs:
           cd /home/ubuntu/app 
           npm i
           npm run build
-          cp -r ./build/* /var/wwww/html
+          sudo cp -r ./build/* /var/wwww/html
           sudo systemctl restart nginx
 
