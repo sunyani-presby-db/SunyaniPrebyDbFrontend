@@ -8,7 +8,7 @@ import axios from "axios"
 import { axios_config } from "../../utils/networks/axios_config"
 import { getToken } from '../../utils/local_data/store_user_info'
 import { addMemberUrl } from '../../utils/networks/endpoints'
-import { addMember } from '../../redux/actions/members_actions';
+import { addMember } from '../../state_manager/actions/members_actions';
 import { connect} from 'react-redux'
 const formItemLayout = {
     labelCol: {

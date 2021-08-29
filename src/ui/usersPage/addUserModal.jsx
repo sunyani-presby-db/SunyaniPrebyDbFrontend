@@ -2,7 +2,7 @@ import { Button, Divider, Form, Input, message, Modal, notification, Spin } from
 import axios from 'axios';
 import React, { useState } from 'react'
 import { connect } from 'react-redux';
-import { addUsersSuccess } from '../../redux/streamlined/users';
+import { addUsersSuccess } from '../../state_manager/streamlined/users';
 import { getToken } from '../../utils/local_data/store_user_info';
 import { axios_config } from '../../utils/networks/axios_config';
 import { addUserUrl } from '../../utils/networks/endpoints';

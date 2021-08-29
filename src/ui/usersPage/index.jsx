@@ -4,7 +4,7 @@ import { Card, Col, Container, Row } from 'react-bootstrap'
 import { DeleteOutlined } from "@ant-design/icons"
 import './styles/index.scss'
 import { connect } from 'react-redux'
-import { searchUser } from '../../redux/streamlined/users'
+import { searchUser } from '../../state_manager/streamlined/users'
 import DeleteUsersModal from './deleteUsersModal'
 import AddUserModal from './addUserModal'
 const UsersPage = ({ userData, filterUser }) => {
