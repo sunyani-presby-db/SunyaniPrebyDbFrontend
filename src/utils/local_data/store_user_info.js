@@ -1,4 +1,4 @@
-const prefix = "sunyani-church-db-";
+const prefix = "sunyani-presby-church-db-";
 
 const fetchLocalItem = (key) => {
   try {
