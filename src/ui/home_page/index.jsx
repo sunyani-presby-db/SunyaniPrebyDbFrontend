@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react'
 // import { getPosts } from '../../redux/actions/post_actions'
 import './styles/index.scss'
 import { connect } from 'react-redux'
-import { Breadcrumb, Button, Divider, Drawer, Layout, Menu } from 'antd';
+import { Breadcrumb, Divider, Layout, Menu } from 'antd';
 import { CloseOutlined, MenuOutlined } from "@ant-design/icons"
 import logo from "../../assets/images/logo.png"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCalendar, faChartPie, faUser, faUserFriends, faUsers } from '@fortawesome/free-solid-svg-icons'
-import { Link, Route, Switch, useHistory } from "react-router-dom"
+import { Route, Switch, useHistory } from "react-router-dom"
 import { } from "@ant-design/icons"
 import StatisticsPage from '../statistics_page';
 import MembersPage from '../members_page';
@@ -32,12 +32,7 @@ const HomePage = ({ fetchMembers, fetchUsers, componentsData, getMeetingDays, fe
         drawerVisible: false
     })
     const history = useHistory()
-    const iconStyle = {
-        fontSize: "1.2rem"
-    }
-    const labelStyle = {
-        fontSize: "1.2rem"
-    }
+
     const toggelDrawer = () => {
         setState({
             ...state,
