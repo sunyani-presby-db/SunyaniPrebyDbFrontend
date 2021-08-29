@@ -1,4 +1,4 @@
-const baseUrl = "http://100.25.217.86"
+const baseUrl = "https://sunyani-presby-church-backend.herokuapp.com";
 // export const postUrl = "sdasdasdasdasd"
 export const loginUrl = `${baseUrl}/account/login`
 export const membersUrl = `${baseUrl}/members`
