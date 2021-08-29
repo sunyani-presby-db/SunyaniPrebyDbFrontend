@@ -3,11 +3,11 @@ import React, { useEffect, useState } from 'react'
 import './styles/index.scss'
 import { connect } from 'react-redux'
 import { Breadcrumb, Button, Divider, Drawer, Layout, Menu } from 'antd';
-import { MenuOutlined } from "@ant-design/icons"
+import { CloseOutlined, MenuOutlined } from "@ant-design/icons"
 import logo from "../../assets/images/logo.png"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCalendar, faChartPie, faUser, faUserFriends, faUsers } from '@fortawesome/free-solid-svg-icons'
-import { Link, Route, Switch } from "react-router-dom"
+import { Link, Route, Switch, useHistory } from "react-router-dom"
 import { } from "@ant-design/icons"
 import StatisticsPage from '../statistics_page';
 import MembersPage from '../members_page';
@@ -31,6 +31,7 @@ const HomePage = ({ fetchMembers, fetchUsers, componentsData, getMeetingDays, fe
     const [state, setState] = useState({
         drawerVisible: false
     })
+    const history = useHistory()
     const iconStyle = {
         fontSize: "1.2rem"
     }
@@ -43,70 +44,66 @@ const HomePage = ({ fetchMembers, fetchUsers, componentsData, getMeetingDays, fe
             drawerVisible: !state.drawerVisible
         })
     }
+    const onNavigagte=(e)=>{
+        console.log(e);
+        history.push(e.key)
+
+    }
     return (
         <LoadingOverlay active={componentsData.overlayLoadingVisible} spinner={<BeatLoader color="#ffffff" />} >
             <Layout id="miain-layout" >
-                <Drawer  onClose={toggelDrawer} visible={state.drawerVisible} placement="left" >
-                    <div className="logo">
+                <Layout.Sider hidden = {!state.drawerVisible} collapsible theme = "light" >
+                      <div className="logo pt-3 ">
                         <img width="50%" src={logo} alt="" srcset="" />
                     </div>
                     <Divider />
-                    <Menu defaultOpenKeys="1" style={{ padding: "none", border: "none" }} >
-                        <Menu.Item className="my-3" key="1" >
-                            <Link to="/" >
-                                <FontAwesomeIcon className="mr-2" icon={faChartPie} style={iconStyle} />
-                                <span style={labelStyle} >
+                     <Menu  onClick = {onNavigagte} defaultOpenKeys="1" style={{ padding: "none", border: "none" }} >
+                        <Menu.Item icon = { <FontAwesomeIcon className="mr-2" icon={faChartPie} />}  className="my-3" key="/" >
+                               
                                     Statistics
-                                </span>
-                            </Link>
                         </Menu.Item>
-                        <Menu.Item className="my-3" key="2" >
-                            <Link to="/members" >
-                                <FontAwesomeIcon className="mr-2" icon={faUserFriends} style={iconStyle} />
-                                <span style={labelStyle} >
+                        <hr />
+                        <Menu.Item icon = {<FontAwesomeIcon className="mr-2" icon={faUserFriends} />} className="my-3" key="/members" >
+                                
                                     Members
-                                </span>
-                            </Link>
                         </Menu.Item>
-                        <Menu.Item className="my-3" key="3" >
-                            <Link to="/attendance">
-                                <FontAwesomeIcon className="mr-2" icon={faCalendar} style={iconStyle} />
-                                <span style={labelStyle} >
+                        <hr />
+                        <Menu.Item icon ={<FontAwesomeIcon className="mr-2" icon={faCalendar} />} className="my-3" key="/attendance" >
+                           
+                                
                                     Attendance
-                                </span>
-                            </Link>
 
                         </Menu.Item>
-                        <Menu.Item className="my-3" key="4" >
-                            <Link to="/groups">
-                                <FontAwesomeIcon className="mr-2" icon={faUsers} style={iconStyle} />
-                                <span style={labelStyle} >
+                        <hr />
+                        <Menu.Item icon = {<FontAwesomeIcon className="mr-2" icon={faUsers} />} className="my-3" key="/groups" >
+                                
                                     Groups
-                                </span>
-                            </Link>
                         </Menu.Item>
-                        <Menu.Item className="my-3" key="5" >
-                            <Link to="/users">
-                                <FontAwesomeIcon className="mr-2" icon={faUser} style={iconStyle} />
-                                <span style={labelStyle} >
+                        <hr />
+                        <Menu.Item icon = {<FontAwesomeIcon className="mr-2" icon={faUser} />} className="my-3" key="/users" >
+                                
                                     Users
-                                </span>
-                            </Link>
 
                         </Menu.Item>
                     </Menu>
-                </Drawer>
-                <Layout.Header className="header" id="header">
+
+                </Layout.Sider>
+
+                <Layout>
+                <Layout.Header  className="header" id="header">
                     <div className="menu-icon">
-                        <Button onClick={toggelDrawer} id="menu-button">
-                            <MenuOutlined id="menu-iconc" />
-                        </Button>
+                        {!state.drawerVisible?( 
+                            <MenuOutlined style = {{fontSize:"1.3rem"}}  onClick={toggelDrawer} id="menu-icon" />
+                    ): 
+                            <CloseOutlined style = {{fontSize:"1.3rem"}}  onClick={toggelDrawer} id="menu-icon" />
+                    }
+                       
                     </div>
 
 
                 </Layout.Header>
 
-                <Layout.Content  >
+                <Layout.Content className = "content">
                     <div className="main-session">
                         <div className="main-inner">
 
@@ -129,10 +126,9 @@ const HomePage = ({ fetchMembers, fetchUsers, componentsData, getMeetingDays, fe
                             </Switch>
                         </div>
                     </div>
-                    <Layout.Footer>
-
-                    </Layout.Footer>
+          
                 </Layout.Content>
+                </Layout>
             </Layout>
         </LoadingOverlay>
     )

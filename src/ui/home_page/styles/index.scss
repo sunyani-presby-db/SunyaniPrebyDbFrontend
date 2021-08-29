@@ -1,19 +1,19 @@
 #miain-layout {
-    .header {
-        background: royalblue;
-        box-shadow: 3px 3px 3px rgba(20, 20, 20, .4);
-    }
-
+  .header {
+    background: #ffffff;
+    // box-shadow: 3px 3px 3px rgba(20, 20, 20, 0.4);
+    height: 60px;
+  }
 }
 
 .logo {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.main-session{
-    min-height: 85vh;
-    .main-inner{
-        padding: 2em ;
-    }
+.main-session {
+  min-height:calc(100vh - 60px);
+  .main-inner {
+    padding: 2em;
+  }
 }
