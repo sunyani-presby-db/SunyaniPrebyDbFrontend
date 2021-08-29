@@ -11,15 +11,15 @@ import { Link, Route, Switch } from "react-router-dom"
 import { } from "@ant-design/icons"
 import StatisticsPage from '../statistics_page';
 import MembersPage from '../members_page';
-import { getMembers } from '../../redux/actions/members_actions';
+import { getMembers } from '../../state_manager/actions/members_actions';
 import LoadingOverlay from 'react-loading-overlay';
 import { BeatLoader } from 'react-spinners'
 import UsersPage from '../usersPage';
-import { getUser } from '../../redux/streamlined/users';
+import { getUser } from '../../state_manager/streamlined/users';
 import AttendancePage from '../attendance';
-import { fetchMeetingDays } from '../../redux/streamlined/attendance';
+import { fetchMeetingDays } from '../../state_manager/streamlined/attendance';
 import GroupPage from '../group_page';
-import { getAllGroupData } from '../../redux/streamlined/group';
+import { getAllGroupData } from '../../state_manager/streamlined/group';
 
 const HomePage = ({ fetchMembers, fetchUsers, componentsData, getMeetingDays, fetchGroups }) => {
     useEffect(() => {
