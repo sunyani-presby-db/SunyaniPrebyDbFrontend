@@ -10,7 +10,7 @@ const fetchLocalItem = (key) => {
 
 export const setUserInfo = (info) => {
   const key = prefix + "userInfo";
-  localStorage.setItem(prefix, JSON.stringify(info));
+  localStorage.setItem(key, JSON.stringify(info));
 };
 export const setAccessToken = (token) => {
   const key = prefix + "JwtToken";
