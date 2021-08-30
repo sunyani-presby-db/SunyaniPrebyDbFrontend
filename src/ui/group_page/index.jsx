@@ -1,21 +1,21 @@
 import React, { useState } from 'react'
 import { Row, Col, Card, Statistic, Button, Input, Form } from 'antd'
 import './styles/style.scss'
-import CustomModal from './custom_modal'
-import CustomForm from './custom_form'
+import AddGroupModal from "./AddGroupModal";
 import CustomTable from './custom_table'
 import { connect } from 'react-redux'
 
 const GroupPage = ({groupData})  => {
-  const [hideModal, setHideModal] = useState(false)
-
-  const hideModalHandler = (flag=true) => {
-    setHideModal(flag)
+  const [visible, setVisible] = useState(false)
+  const closeModal=()=>{
+    setVisible(false)
   }
 
-  const addGroup = () => {
-    console.log('added a group')
+  const openModal=()=>{
+    setVisible(true)
   }
+
+
   
   return (
     <div className='group-section'>
@@ -29,7 +29,7 @@ const GroupPage = ({groupData})  => {
           </Col>
           <Col sm={{span: 12}}>
             <Card className='custom-panel-card'>
-            <Button onClick={() => hideModalHandler()} shape="round" style={{ color: "royalblue", borderColor: "royalblue" }} >Add Group</Button>
+            <Button onClick={openModal} shape="round" style={{ color: "royalblue", borderColor: "royalblue" }} >Add Group</Button>
             </Card>
           </Col>
         </Row>
@@ -54,12 +54,13 @@ const GroupPage = ({groupData})  => {
         </Row>
         </div>
       </div>
-      <CustomModal 
+      {/* <CustomModal 
       label={'Add Group'} 
       hide={hideModal} 
       hideModalHandler={hideModalHandler}>
         <CustomForm onSubmit={addGroup}/>
-      </CustomModal>
+      </CustomModal> */}
+      <AddGroupModal closeModal= {closeModal} visible = {visible}  />
     </div>
   )
 }

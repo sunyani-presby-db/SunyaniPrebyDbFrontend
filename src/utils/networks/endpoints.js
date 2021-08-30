@@ -8,4 +8,4 @@ export const getUsersUrl = `${baseUrl}/account`
 export const userDetailedUrl =id=> `${getUsersUrl}/${id}`
 export const addUserUrl = `${getUsersUrl}/add`
 export const attendanceUrl = `${baseUrl}/attendance`
-export const getGroupsUrl = `${baseUrl}/members/groups`
+export const groupsUrl = `${baseUrl}/members/groups`
