@@ -82,7 +82,10 @@ const AddGroupModal = ({addGroup,closeModal,visible}) => {
       <Button shape = "round"  className = "mx-2" style = {{width:"70%"}} type="primary" htmlType="submit">
             Submit
           </Button>
-            <Button shape = "round"  className = "mx-2"  style = {{width:"70%",backgroundColor:"red",color:"white"}}  htmlType="submit">
+            <Button onClick = {()=>{
+              from.resetFields()
+              closeModal()
+            }} shape = "round"  className = "mx-2"  style = {{width:"70%",backgroundColor:"red",color:"white"}} >
             Cancel
           </Button>
     </div>

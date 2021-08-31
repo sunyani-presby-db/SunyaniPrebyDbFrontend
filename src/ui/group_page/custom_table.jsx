@@ -1,10 +1,18 @@
 import React from 'react'
-import {Table, Space , Tooltip} from 'antd'
+import {Table, Space , Tooltip, Popconfirm} from 'antd'
 import {EyeOutlined, EditOutlined, DeleteOutlined} from '@ant-design/icons'
 import customColors from '../../utils/ui/custom_colors';
+import useAuthToken from '../../utils/hooks/auth_token_hook';
+import { connect } from 'react-redux';
+import { deleteGroup } from '../../state_manager/streamlined/group';
 
 
-function CustomTable({source}) {
+function CustomTable({source,removeGroup,groups}) {
+
+  const token = useAuthToken()
+
+
+
 
   const getColumns = () => {
     const col = [];
@@ -61,7 +69,13 @@ function CustomTable({source}) {
                 <EditOutlined style={{color: 'blue'}}/>
               </Tooltip>
               <Tooltip title="Delete group's information">
-                <DeleteOutlined style={{color: 'red'}}/>
+                <Popconfirm 
+                onConfirm = {()=>{
+                    removeGroup(record,token)
+                }}
+                title = "Are you sure you want to delete this group" >
+                  <DeleteOutlined style={{color: 'red'}}/>
+                </Popconfirm>
               </Tooltip>
             </Space>
            </>
@@ -102,9 +116,19 @@ function CustomTable({source}) {
 
   return (
     <>
-      <Table dataSource={source} columns={getColumns()}/>
+      <Table loading = {groups.loading} dataSource={source} columns={getColumns()}/>
     </>
   )
 }
+const mapStateToProps =state=>{
+  return {
+    groups: state.groups
+  }
+}
+const mapDispatchToProps=dispatch=>{
+  return {
+    removeGroup:(group,token)=>dispatch(deleteGroup(group,token))
+  }
 
-export default CustomTable
+}
+export default connect(mapStateToProps,mapDispatchToProps)(CustomTable)
