@@ -4,9 +4,19 @@ import './styles/style.scss'
 import AddGroupModal from "./AddGroupModal";
 import CustomTable from './custom_table'
 import { connect } from 'react-redux'
+import GroupsDetailDrawer from './group_detail_drawer';
 
 const GroupPage = ({groupData})  => {
   const [visible, setVisible] = useState(false)
+  const [detailDrawerVisible,setDetailDrawerVisible] = useState(false)
+  const [currentGroup,setCurrentGroup] = useState({})
+  
+  const openDetailDrawer=()=>{
+    setDetailDrawerVisible(true)
+  }
+  const closeDetailDrawer=()=>{
+    setDetailDrawerVisible(false)
+  }
   const closeModal=()=>{
     setVisible(false)
   }
@@ -48,18 +58,13 @@ const GroupPage = ({groupData})  => {
                
                 </Col>
               </Row>
-              <CustomTable source={groupData.data}/>
+              <CustomTable setCurrentGroup  = {setCurrentGroup} openDetailDrawer = {openDetailDrawer} source={groupData.data}/>
             </Card>
           </Col>
         </Row>
         </div>
       </div>
-      {/* <CustomModal 
-      label={'Add Group'} 
-      hide={hideModal} 
-      hideModalHandler={hideModalHandler}>
-        <CustomForm onSubmit={addGroup}/>
-      </CustomModal> */}
+      <GroupsDetailDrawer group = {currentGroup} visible = {detailDrawerVisible} closeDrawer = {closeDetailDrawer} />
       <AddGroupModal closeModal= {closeModal} visible = {visible}  />
     </div>
   )

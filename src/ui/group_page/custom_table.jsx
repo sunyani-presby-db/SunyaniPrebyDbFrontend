@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { deleteGroup } from '../../state_manager/streamlined/group';
 
 
-function CustomTable({source,removeGroup,groups}) {
+function CustomTable({source,removeGroup,groups,openDetailDrawer,setCurrentGroup}) {
 
   const token = useAuthToken()
 
@@ -63,7 +63,9 @@ function CustomTable({source,removeGroup,groups}) {
            <>
             <Space size='large'>
               <Tooltip title="view group's information">
-                <EyeOutlined style={{color: customColors.primary}} />
+                <EyeOutlined onClick = {()=>{
+                  setCurrentGroup(record)
+                  openDetailDrawer()}} style={{color: customColors.primary}} />
               </Tooltip>
               <Tooltip title="Edit group's information">
                 <EditOutlined style={{color: 'blue'}}/>
