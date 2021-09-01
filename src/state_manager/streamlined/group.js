@@ -16,6 +16,17 @@ const DELETE_GROUP_REQUEST = "DELETE_GROUP_REQUEST";
 const DELETE_GROUP_SUCCESS = "DELETE_GROUP_SUCCESS";
 const DELETE_GROUP_FAILED = "DELETE_GROUP_FAILED";
 
+//Add member to group
+const ADD_MEMBER = "ADD_CHURCH_MEMBER";
+
+export const addChurchMember = (group) => {
+  console.log(group);
+  return {
+    type: ADD_MEMBER,
+    payload: group,
+  };
+};
+
 const deleteGroupRequest = () => {
   return {
     type: DELETE_GROUP_REQUEST,
@@ -136,6 +147,12 @@ const group_reducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         loading: false,
+      };
+    case ADD_MEMBER:
+      console.log(payload);
+      return {
+        ...state,
+        data:payload,
       };
 
     default:

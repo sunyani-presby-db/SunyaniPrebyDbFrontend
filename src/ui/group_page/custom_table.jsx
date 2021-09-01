@@ -7,54 +7,29 @@ import { connect } from 'react-redux';
 import { deleteGroup } from '../../state_manager/streamlined/group';
 
 
-function CustomTable({source,removeGroup,groups,openDetailDrawer,setCurrentGroup}) {
+function CustomTable({removeGroup,groups,openDetailDrawer,setCurrentGroup}) {
 
   const token = useAuthToken()
+  const getColumns = ()=>{
+    let column = []
+    if (groups.data.length !==0){
+      const object = groups.data[0]
+      object["member"] = undefined
+      Object.keys(object).forEach(key=>{
+        if (key === "title")
+        column.push({
+          title:"Name",
+          dataIndex:key,
+          key:key
 
-
-
-
-  const getColumns = () => {
-    const col = [];
-    // console.log('length', source.length)
-    if(source.length <= 0){
-      return columns;
-    }
-
-    col.push({
-      title: 'title',
-      dataIndex: 'title',
-      key: 'title'
-    })
-
-    Object.keys(source[0]).filter(key =>{
-      if (key.toLowerCase() === 'id' || key.toLowerCase() === 'title' || key.toLowerCase() === 'created_at' || key.toLowerCase() === 'updated_at' || key.toLowerCase() === 'description')
-        return false;
-      else
-        return true;
-
-    }).map( key => {
-      if( key.toLowerCase() === 'members')
-        return col.push(    {
-          title: 'Number of members',
-          dataIndex: key,
-          key: key,
-          render: members => (
-            <p>{members.length}</p>
-          )
         })
-      
-      else
-      
-      return col.push({
-        title: key.toLowerCase(),
-        dataIndex: key,
-        key: key
       })
-    })
+      column.push({
+        title:"Number of members",
+        render:(items,record)=>(<p> {record.members.length} </p>),
 
-    // console.log('columns',col);
-    col.push(
+      })
+      column.push(
       {
         title: 'Actions',
         dataIndex: '',
@@ -82,22 +57,9 @@ function CustomTable({source,removeGroup,groups,openDetailDrawer,setCurrentGroup
             </Space>
            </>
           ) 
-  
-      }
-    )
-
-    
-    
-
-    return col;
-  }
-
-  const columns = [
-    {
-      title: '#',
-      dataIndex: 'id',
-      key: 'id'
-    },
+      })
+    }else{
+      column = [
     {
       title: 'Title',
       dataIndex: 'title',
@@ -111,14 +73,21 @@ function CustomTable({source,removeGroup,groups,openDetailDrawer,setCurrentGroup
         <p>{members.length}</p>
       )
     },
+    {
+      title:"Actions"
+    }
     
 
   ]
+    }
+
+    return column;
+  }
 
 
   return (
     <>
-      <Table loading = {groups.loading} dataSource={source} columns={getColumns()}/>
+      <Table loading = {groups.loading} dataSource={groups.data} columns={getColumns()}/>
     </>
   )
 }

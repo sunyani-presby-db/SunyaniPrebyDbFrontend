@@ -39,7 +39,8 @@ const GroupPage = ({groupData})  => {
           </Col>
           <Col sm={{span: 12}}>
             <Card className='custom-panel-card'>
-            <Button onClick={openModal} shape="round" style={{ color: "royalblue", borderColor: "royalblue" }} >Add Group</Button>
+            <Button  onClick={openModal} shape="round" style={{ color: "royalblue", borderColor: "royalblue" , width:"100%" }} >Add Group</Button>
+
             </Card>
           </Col>
         </Row>

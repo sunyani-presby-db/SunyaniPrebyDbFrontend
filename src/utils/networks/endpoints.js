@@ -10,3 +10,5 @@ export const addUserUrl = `${getUsersUrl}/add`;
 export const attendanceUrl = `${baseUrl}/attendance`;
 export const groupsUrl = `${baseUrl}/members/groups`;
 export const groupsDetailedUrl = (id) => `${groupsUrl}/${id}`;
+export const addMemberToGroupUrl = (group_id, memeber_id) =>
+  `${groupsUrl}/add_group_member/${group_id}/${memeber_id}`;
